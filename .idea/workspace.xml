@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="aa3f845c-d1e4-432d-b546-e169d1de98ca" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project-base/modelObj.js" beforeDir="false" afterPath="$PROJECT_DIR$/project-base/modelObj.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project-base/spaceship.htm" beforeDir="false" afterPath="$PROJECT_DIR$/project-base/spaceship.htm" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,7 +55,10 @@
       <option name="presentableId" value="Default" />
       <updated>1580393177453</updated>
       <workItem from="1580393178972" duration="3201000" />
-      <workItem from="1580466473421" duration="423000" />
+      <workItem from="1580466473421" duration="1659000" />
+      <workItem from="1580761540474" duration="7000" />
+      <workItem from="1581494862386" duration="22000" />
+      <workItem from="1582900054532" duration="7156000" />
     </task>
     <servers />
   </component>
@@ -61,13 +66,13 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="656" y="345" key="com.intellij.ide.util.TipDialog" timestamp="1580466473396">
+    <state x="656" y="345" key="com.intellij.ide.util.TipDialog" timestamp="1581494862479">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="656" y="345" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1580466473396" />
-    <state x="842" y="338" width="607" height="536" key="find.popup" timestamp="1580395192472">
+    <state x="656" y="345" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1581494862479" />
+    <state x="842" y="338" width="737" height="606" key="find.popup" timestamp="1582906560888">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="842" y="338" width="607" height="536" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1580395192472" />
+    <state x="842" y="338" width="737" height="606" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1582906560888" />
   </component>
 </project>

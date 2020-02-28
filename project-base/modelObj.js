@@ -134,9 +134,9 @@ Model.prototype.setParameters = function (elapsed) {
 
 Model.prototype.move = function (x, y) {
     // faire bouger votre vaisseau ici. Exemple :
-    this.rotation += x * 0.05 + 0.5; // permet de tourner autour de l'axe Y
-    this.position[0] += x * 0.1; // translation gauche/droite
-    this.position[1] += y * 0.1; // translation haut/bas
+    this.rotation += x * 0.01 + 0.1; // permet de tourner autour de l'axe Y
+    this.position[0] += x * 0.08; // translation gauche/droite
+    this.position[1] += y * 0.08; // translation haut/bas
 
 }
 
