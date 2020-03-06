@@ -12,10 +12,16 @@ function initBackgroundShader() {
     backgroundShader.frequencyUniform = gl.getUniformLocation(backgroundShader, "uFrequency");
     backgroundShader.persistenceUniform = gl.getUniformLocation(backgroundShader, "uPersistence");
 
+    //Variable texture
+    backgroundShader.texUniform = gl.getUniformLocation(backgroundShader, "uTex");
+
     console.log("background shader initialized");
 }
 
-function Background() {
+function Background(backgroundTexture) {
+
+    // Stockage de la texture
+    this.backgroundTexture = backgroundTexture;
 
     // un tableau contenant les positions des sommets (sur CPU donc)
     var vertices = [
@@ -85,7 +91,7 @@ Background.prototype.initParameters = function () {
 Background.prototype.setParameters = function (elapsed) {
     // animer le fond en modifiant la variable offset
     // par exemple :
-    this.offset[1] += 0.01;
+    this.offset[1] += 0.0001;
 }
 
 Background.prototype.sendUniformVariables = function () {
@@ -94,6 +100,11 @@ Background.prototype.sendUniformVariables = function () {
     gl.uniform1f(backgroundShader.amplitudeUniform, this.amplitude);
     gl.uniform1f(backgroundShader.frequencyUniform, this.frequency);
     gl.uniform1f(backgroundShader.persistenceUniform, this.persistence);
+
+    // how to send a texture AJOUTER:
+    gl.activeTexture(gl.TEXTURE0);
+    gl.bindTexture(gl.TEXTURE_2D, this.backgroundTexture);
+    gl.uniform1i(backgroundShader.texUniform, 0);
 }
 
 Background.prototype.draw = function () {

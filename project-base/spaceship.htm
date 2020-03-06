@@ -36,6 +36,7 @@
       uniform float uAmplitude; // amplitude du bruit
       uniform float uFrequency; // frequence du bruit
       uniform float uPersistence; // persistence du bruit
+      uniform sampler2D uTex;
       
     in vec2 vTextureCoord; // recuperation de la coord rasterisee
       out vec4 outColor;
@@ -105,10 +106,11 @@
       float d = computeHeight(p); // profondeur au point p
       vec3 n = computeNormal(p); // normale au point p
 
-
+      // Chargement des textures
+      outColor = texture(uTex,fract(p));
 
       // affichage de la profondeur
-      outColor = vec4(7./14.0,12.0*d,8.0*d,1.0);
+      //outColor = vec4(7./14.0,12.0*d,8.0*d,1.0);
 
       // affichage de la normale
       //outColor = vec4(n,1.0);
@@ -425,14 +427,15 @@
 
             // test: création d'une texture
             var texStar = initTexture('textures/kirby-star.png');
+            var texBck = initTexture('textures/background.jpg');
 
             initBackgroundShader();
             initModelShader();
             initSplatShader();
 
             //heightfield = new Heightfield();
-            background = new Background();
-            kirby = new Model('models/kirby/source/kirby.obj');
+            background = new Background(texBck);
+            kirby = new Model('models/yoshi/yoshi.obj');
             weapon = new Splat(texStar);
             weapon.position = [0.5, 1.2, 0];
 
@@ -440,7 +443,6 @@
             for (let nb=0; nb < 5; nb++)
             {
                 let texBomb = initTexture('textures/bomb.png');
-                //texBomb.background(0,0,0,0);
                 let bomb = new Splat(texBomb);
                 bomb.position[0] = MAP_DIM_MAX * randomDirection();
                 bomb.position[1] = MAP_DIM_MAX;
