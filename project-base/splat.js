@@ -114,7 +114,7 @@ Splat.prototype.sendUniformVariables = function () {
 }
 
 Splat.prototype.draw = function () {
-    // dessin du splat 
+    // dessin du splat
     if (this.loaded) {
         gl.bindVertexArray(this.vao);
         gl.drawElements(gl.TRIANGLES, this.triangles.numItems, gl.UNSIGNED_SHORT, 0);

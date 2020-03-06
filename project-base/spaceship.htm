@@ -95,18 +95,23 @@
 	  return cross(v1,v2);
       }
       
-      void main(void) {
-	  // décalage avec la variable uOffset
-	  vec2 p = vTextureCoord*2.0-vec2(1.0)+uOffset;
-	  
-	  float d = computeHeight(p); // profondeur au point p
-	  vec3 n = computeNormal(p); // normale au point p
+       void main(void) {
+      // décalage avec la variable uOffset
+      vec2 p = vTextureCoord*2.0-vec2(1.0)+uOffset;
+      //Effet creux
+      //p.x *= (vTextureCoord.y/10.+0.01);
 
-	  // affichage de la profondeur
-	  outColor = vec4(d,d,d,1.0);
 
-	  // affichage de la normale
-	  //outColor = vec4(n,1.0);
+      float d = computeHeight(p); // profondeur au point p
+      vec3 n = computeNormal(p); // normale au point p
+
+
+
+      // affichage de la profondeur
+      outColor = vec4(7./14.0,12.0*d,8.0*d,1.0);
+
+      // affichage de la normale
+      //outColor = vec4(n,1.0);
       }
       
 
@@ -198,6 +203,7 @@
         var background;
         var kirby;
         var sword;
+        var bombs = [];
 
         function drawScene() {
             // initialisation du viewport
@@ -207,20 +213,37 @@
             gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
             // dessin du fond (décommenter pour travailler dessus)
-            // gl.useProgram(background.shader());
-            // background.sendUniformVariables();
-            // background.draw();
+            gl.useProgram(background.shader());
+            background.sendUniformVariables();
+            background.draw();
 
-            // dessin
             gl.useProgram(kirby.shader());
+            kirby.translate = 0.5;
+
+            gl.uniform2fv(gl.getUniformLocation(gl.createProgram(), "u_scale"), [0.5,0.5]);
             kirby.sendUniformVariables();
             kirby.draw();
+            // dessin
+            //var textureKirby = initTexture('models/kirby/textures/KirbyBodyBigFull.png');
+            //gl.bindTexture(gl.TEXTURE_2D, textureKirby);
+
 
             // afficher un splat quand on appuie sur espace
             gl.enable(gl.BLEND); // transparence activée
             gl.useProgram(sword.shader());
             sword.sendUniformVariables();
             sword.draw();
+
+            // afficher les bombes (splat)
+            let currentBomb;
+            for (let bombId = 0; bombId < bombs.length; bombId++) {
+                currentBomb = bombs[bombId];
+                gl.enable(gl.BLEND); // transparence activée
+                gl.useProgram(currentBomb.shader());
+                currentBomb.sendUniformVariables();
+                currentBomb.draw();
+            }
+
             gl.disable(gl.BLEND); // transparence désactivée
         }
 
@@ -302,17 +325,38 @@
                 background.setParameters(elapsed);
                 sword.setParameters(elapsed);
 
+                // Pour chaque bombe, on màj la position.
+                for (var bombId = 0; bombId < bombs.length; bombId++) {
+
+                    var currentBomb = bombs[bombId];
+
+                    // Redéfinition de la direction si x part en dehors du cadre
+                    while (currentBomb.position[0] + currentBomb.directionX < -1.5 || currentBomb.position[0] + currentBomb.directionX > 1.5) {
+                        currentBomb.directionX = randomDirection();
+                    }
+
+                    // Redéfinition de la direction si y part en dehors du cadre
+                    while (currentBomb.position[1] + currentBomb.directionY < -1.5 || currentBomb.position[1] + currentBomb.directionY > 1.5) {
+                        currentBomb.directionY = randomDirection();
+                    }
+
+                    currentBomb.position[0] += currentBomb.directionX * currentBomb.vitesse;
+                    currentBomb.position[1] += currentBomb.directionY * currentBomb.vitesse;
+                    currentBomb.setParameters(elapsed);
+                    console.log("bomb["+bombId+"]: "+currentBomb.position[0]+";"+currentBomb.position[1]);
+                }
+
                 if (isPressedDirectionKeys() !== true) {
                     //console.log(kirby.position[0] + (0.5 * document.getElementById('SpaceShip').width));
 
-                    if (kirby.position[0] * 100 >= document.getElementById('SpaceShip').width) {
+                    /**if (kirby.position[0] * 100 >= document.getElementById('SpaceShip').width) {
                         movement = -1;
                     } else if ((kirby.position[0] + (document.getElementById('SpaceShip').width / 100)) < 0) {
                         movement = 1;
                     }
 
                     //if ((kirby.position[0]+(document.getElementById('SpaceShip').width / 100)) < 0) {movement = 0;}
-                    kirby.move(movement, 0);
+                    kirby.move(movement, 0);*/
                 }
 
                 if (sword.position[1] < 100) {
@@ -329,6 +373,10 @@
             animate();
         }
 
+        // Génération d'une direction aléatoire pour x ou y.
+        function randomDirection() {
+            return (Math.random() * 2.0 - 1.0);
+        }
 
         function webGLStart() {
             // initialisation du canvas et des objets OpenGL
@@ -336,7 +384,8 @@
             initGL(canvas);
 
             // test: création d'une texture
-            var tex = initTexture('textures/sword.png');
+            var texStar = initTexture('textures/kirby-star.png');
+
 
             initBackgroundShader();
             initModelShader();
@@ -345,11 +394,24 @@
             //heightfield = new Heightfield();
             background = new Background();
             kirby = new Model('models/kirby/source/kirby.obj');
-            sword = new Model('models/sword/source/sword.obj');
-            //sword = new Splat(tex);
+            sword = new Splat(texStar);
+
+
+            for (let nb=0; nb < 40; nb++)
+            {
+                let texBomb = initTexture('textures/bomb.png');
+                //texBomb.background(0,0,0,0);
+                let bomb = new Splat(texBomb);
+                bomb.position[1] = canvas.height / 200;
+                bomb.directionX = randomDirection();
+                bomb.directionY = randomDirection();
+                bomb.vitesse = Math.random() * 0.03;
+
+                bombs.push(bomb);
+            }
 
             // la couleur de fond sera grise foncée
-            gl.clearColor(0.0, 0.3, 0.3, 1.0);
+            gl.clearColor(0.5, 0.5, 0.5, 0.9);
 
             // active le test de profondeur
             gl.enable(gl.DEPTH_TEST);

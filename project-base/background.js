@@ -77,15 +77,15 @@ Background.prototype.initParameters = function () {
     // paramètres envoyés au shader pour générer le fond
     this.timer = 0.0;
     this.offset = [0.0, 0.0];
-    this.amplitude = 3.0;
+    this.amplitude = 1000.0;
     this.frequency = 5.0;
-    this.persistence = 0.45;
+    this.persistence = 0.3;
 }
 
 Background.prototype.setParameters = function (elapsed) {
     // animer le fond en modifiant la variable offset
     // par exemple :
-    // this.offset[1] += ... 
+    this.offset[1] += 0.01;
 }
 
 Background.prototype.sendUniformVariables = function () {
