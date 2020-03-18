@@ -3,7 +3,7 @@
     <title>GameBoard</title>
     <meta http-equiv="content-type" content="text/html; charset=windows-1252">
 
-    <link type="text/css" href="style.css" rel="stylesheet" />
+    <link type="text/css" href="style.css" rel="stylesheet"/>
 
     <script type="text/javascript" src="gl-matrix.js"></script>
     <script type="text/javascript" src="game-utils.js"></script>
@@ -26,6 +26,7 @@
           // stockage de la coordonnee de texture
           vTextureCoord = aVertexCoord;
       }
+
 
 
     </script>
@@ -120,6 +121,7 @@
       
 
 
+
     </script>
 
     <script id="model-vs" type="x-shader/x-vertex">#version 300 es
@@ -140,6 +142,7 @@
       }
 
 
+
     </script>
 
     <script id="model-fs" type="x-shader/x-fragment">#version 300 es
@@ -154,8 +157,14 @@
 	  vec3 n = normalize(vNormal);
 
 	  // pour le moment, on affiche juste la normale
-          outColor = vec4(n,1.);
+          //outColor = vec4(n,1.);
+
+      // Couleur du yoshi
+	  vec3 l = vec3(0.,0.,1.);
+	  float diff = max(dot(n,l),0.1);
+	  outColor = vec4(diff,(diff)+9.,diff,1.);
       }
+
 
 
     </script>
@@ -175,6 +184,7 @@
 	  // stockage de la coordonnee de texture
 	  vTextureCoord = aVertexCoord;
       }
+
 
 
     </script>
@@ -198,6 +208,7 @@
 	  // TEST: affichage d'une texture donnée en paramètre
 	  outColor = texture(uTex,vTextureCoord);
       }
+
 
 
     </script>
@@ -227,7 +238,7 @@
             gl.useProgram(character.shader());
             character.translate = 0.5;
 
-            gl.uniform2fv(gl.getUniformLocation(gl.createProgram(), "u_scale"), [0.5,0.5]);
+            gl.uniform2fv(gl.getUniformLocation(gl.createProgram(), "u_scale"), [0.5, 0.5]);
             character.sendUniformVariables();
             character.draw();
             // dessin
@@ -331,7 +342,7 @@
                 weapon.setParameters(elapsed);
 
                 // Pour chaque bombe, on màj la position.
-                for (var bombId = bombs.length-1; bombId > 0; bombId--) {
+                for (var bombId = bombs.length - 1; bombId > 0; bombId--) {
 
                     var currentBomb = bombs[bombId];
                     var newPosX = currentBomb.position[0] + currentBomb.directionX * currentBomb.vitesse;
@@ -371,7 +382,7 @@
                     if (isCollision(currentBomb, weapon)) {
                         console.log("Collision avec étoile :(");
                         destroyedBombs.push(bombId);
-                        console.log("[DESTROYED]: "+bombId);
+                        console.log("[DESTROYED]: " + bombId);
                     } else {
                         currentBomb.position[0] = newPosX;
                         currentBomb.position[1] = newPosY;
@@ -385,7 +396,7 @@
             }
 
             // On finalise par la suppression des bombes touchées.
-            for(var destroyedBombId = 0; destroyedBombId < destroyedBombs.length; destroyedBombId++) {
+            for (var destroyedBombId = 0; destroyedBombId < destroyedBombs.length; destroyedBombId++) {
                 bombs.splice(destroyedBombs[destroyedBombId], 1);
             }
 
@@ -442,8 +453,7 @@
             weapon.position = [0.5, 1.2, 0];
 
 
-            for (let nb=0; nb < 5; nb++)
-            {
+            for (let nb = 0; nb < 5; nb++) {
                 let texBomb = initTexture('textures/bomb.png');
                 let bomb = new Splat(texBomb);
                 bomb.position[0] = MAP_DIM_MAX * randomDirection();
@@ -483,25 +493,26 @@
 
 <body onload="webGLStart();">
 
-    <div class="page">
+<div class="page">
 
-        <div class="game">
+    <div class="game">
 
-            <canvas id="GameBoard"></canvas>
+        <canvas id="GameBoard"></canvas>
 
-            <div id="panel">
-                <table>
-                    <tr>
-                        <td class="panel-lifes" width="100px"> <span id="player_lifes">X</span> / <span id="total_lifes">X</span> </td>
-                        <td class="panel-info"> . . . . . </td>
-                        <td class="panel-score" width="100px"> XXXXX </td>
-                    </tr>
-                </table>
-            </div>
-
+        <div id="panel">
+            <table>
+                <tr>
+                    <td class="panel-lifes" width="100px"><span id="player_lifes">X</span> / <span
+                            id="total_lifes">X</span></td>
+                    <td class="panel-info"> . . . . .</td>
+                    <td class="panel-score" width="100px"> XXXXX</td>
+                </tr>
+            </table>
         </div>
 
     </div>
+
+</div>
 
 </body>
 </html>
