@@ -222,6 +222,8 @@
         var character;
         var weapon;
         var bombs = [];
+        var life = 3;
+        var score = 0;
 
         function drawScene() {
             // initialisation du viewport
@@ -376,6 +378,8 @@
                     // TODO : Collision avec le personnage
                     if (isCollision(currentBomb, character)) {
                         console.log("Collision avec Kirby :(");
+                        life--;
+                        document.getElementById("player_lifes").innerText = life;
                     }
 
                     // TODO : Collision avec l'étoile
@@ -398,6 +402,8 @@
             // On finalise par la suppression des bombes touchées.
             for (var destroyedBombId = 0; destroyedBombId < destroyedBombs.length; destroyedBombId++) {
                 bombs.splice(destroyedBombs[destroyedBombId], 1);
+                score = score + 1000;
+                document.getElementById("score").innerText = "Score : "+score+" points";
             }
 
             lastTime = timeNow;
@@ -502,10 +508,10 @@
         <div id="panel">
             <table>
                 <tr>
-                    <td class="panel-lifes" width="100px"><span id="player_lifes">X</span> / <span
-                            id="total_lifes">X</span></td>
-                    <td class="panel-info"> . . . . .</td>
-                    <td class="panel-score" width="100px"> XXXXX</td>
+                    <td class="panel-lifes" width="100px"><span id="player_lifes">3</span> / <span
+                            id="total_lifes"> 3</span></td>
+                    <td class="panel-info"> Yoshi bomb game</td>
+                    <td class="panel-score" width="200" id="score"> Score : 0 point</td>
                 </tr>
             </table>
         </div>
