@@ -311,25 +311,18 @@
 
         }
 
-        function mouseMove(event) {
-            // recup evenement souris
-            //var newx = 2.0*(event.clientX/gl.viewportWidth)-1.0;
-            //var newy = -(2.0*(event.clientY/gl.viewportHeight)-1.0);
-        }
-
-
         // animation
-        var lastTime = 0;
-        var lastTimeBomb = 0;
-        var movement = 1; // right
+        let lastTime = 0;
+        let lastTimeBomb = 0;
+        let delayBombSpawn = 2000;
+        let movement = 1; // right
 
         function animate() {
             // fonction appelée à chaque frame, permet d'animer la scène
             let timeNow = new Date().getTime();
             let destroyedBombs = [];
 
-            if ( (timeNow - lastTimeBomb) > 5000) {
-
+            if ((timeNow - lastTimeBomb) > delayBombSpawn) {
                 let texBomb = initTexture('textures/bomb.png');
                 let bomb = new Splat(texBomb);
                 bomb.position[0] = MAP_DIM_MAX * randomDirection(); // Bombe coord horizontale
@@ -340,6 +333,10 @@
 
                 bombs.push(bomb);
                 lastTimeBomb = timeNow;
+
+                if (bombs.length < 5) {
+                    delayBombSpawn -= 100;
+                }
             }
 
             if (lastTime !== 0) {
