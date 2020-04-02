@@ -428,9 +428,7 @@
 
                     // Collision entre l'étoile et les bombes
                     if (isCollision(currentBomb, weapon)) {
-                        console.log("Collision avec étoile :(");
                         destroyedBombs.push(bombId);
-                        console.log("[DESTROYED]: " + bombId);
                     } else {
                         currentBomb.position[0] = newPosX;
                         currentBomb.position[1] = newPosY;
@@ -589,7 +587,10 @@
 
         <div id="panel">
             <div id="score">Score : 0 points</div>
-            <div id="information">Prêt ? <a href="javascript:start()">Lancer la partie</a></div>
+            <div id="information">
+                Détruisez le plus de bombes possibles tout en évitant d'avoir 2 bombes au niveau du personnage !<br>
+                Bombe normale : 1 pt, Bombe spéciale : 10pts<br><br>
+                <a href="javascript:start()">Lancer la partie</a></div>
             <div id="gameover"></div>
         </div>
 
