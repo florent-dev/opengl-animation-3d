@@ -102,7 +102,9 @@ Background.prototype.sendUniformVariables = function () {
     gl.uniform1f(backgroundShader.persistenceUniform, this.persistence);
 
     // how to send a texture AJOUTER:
+    // Active la texture 2D
     gl.activeTexture(gl.TEXTURE0);
+    // projette la texture sur l'unite courante
     gl.bindTexture(gl.TEXTURE_2D, this.backgroundTexture);
     gl.uniform1i(backgroundShader.texUniform, 0);
 }
