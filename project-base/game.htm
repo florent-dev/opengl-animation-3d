@@ -105,7 +105,7 @@
       }
       
        void main(void) {
-      // dï¿½calage avec la variable uOffset
+      // décalage avec la variable uOffset
       vec2 p = vTextureCoord*2.0-vec2(1.0)+uOffset;
       //Effet creux
       //p.x *= (vTextureCoord.y/10.+0.01);
@@ -227,10 +227,10 @@
       void main(void) {
 	  float alpha = 1.-smoothstep(0.2,0.25,distance(vec2(.5),vTextureCoord));
 
-	  // TEST: affichae d'un point avec la couleur donnï¿½e en paramï¿½tre
+	  // TEST: affichae d'un point avec la couleur donnée en paramètre
 	  //outColor = vec4(alpha*maCouleur,alpha);
 
-	  // TEST: affichage d'une texture donnï¿½e en paramï¿½tre
+	  // TEST: affichage d'une texture donnée en paramètre
 	  outColor = texture(uTex,vTextureCoord);
       }
 
@@ -260,7 +260,7 @@
             // efface les buffers de couleur et de profondeur
             gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-            // dessin du fond (dï¿½commenter pour travailler dessus)
+            // dessin du fond (décommenter pour travailler dessus)
             gl.useProgram(background.shader());
             background.sendUniformVariables();
             background.draw();
@@ -274,7 +274,7 @@
 
 
             // afficher un splat quand on appuie sur espace
-            gl.enable(gl.BLEND); // transparence activï¿½e
+            gl.enable(gl.BLEND); // transparence activée
             gl.useProgram(weapon.shader());
             weapon.sendUniformVariables();
             weapon.draw();
@@ -284,7 +284,7 @@
                 let currentBomb;
                 for (let bombId = 0; bombId < bombs.length; bombId++) {
                     currentBomb = bombs[bombId];
-                    gl.enable(gl.BLEND); // transparence activï¿½e
+                    gl.enable(gl.BLEND); // transparence activée
                     gl.useProgram(currentBomb.shader());
                     currentBomb.sendUniformVariables();
                     currentBomb.draw();
@@ -293,7 +293,7 @@
                 document.getElementById("scorefinal").innerText = "Votre score : " + score + " points";
                 gameOver();
             }
-            gl.disable(gl.BLEND); // transparence dï¿½sactivï¿½e
+            gl.disable(gl.BLEND); // transparence désactivée
         }
 
         // une bonne maniere de gerer les evenements claviers
@@ -331,11 +331,11 @@
             }
 
             if (currentlyPressedKeys[32]) { // SPACE
-                // lancer une ï¿½toile
-                let p = character.getBBox(); // boite englobante de character sur l'ï¿½cran
+                // lancer une étoile
+                let p = character.getBBox(); // boite englobante de character sur l'écran
                 let x = (p[0][0] + p[1][0]) / 2;
                 let y = p[1][1];
-                let z = p[1][2] + 0.005; // profondeur du splat (juste derriï¿½re le vaisseau)
+                let z = p[1][2] + 0.005; // profondeur du splat (juste derrière le vaisseau)
 
                 weapon.position[0] = x;
                 weapon.position[1] = y;
@@ -351,16 +351,16 @@
         let movement = 1; // right
 
         function animate() {
-            // fonction appelï¿½e ï¿½ chaque frame, permet d'animer la scï¿½ne
+            // fonction appelée à chaque frame, permet d'animer la scène
             let timeNow = new Date().getTime();
             let destroyedBombs = [];
 
-            // Gï¿½nï¿½ration des bombes progressivement
+            // Génération des bombes progressivement
             if ((timeNow - lastTimeBomb) > delayBombSpawn && bombs.length < 20) {
                 let texBomb = initTexture('textures/bomb.png');
                 let isSpecial = false;
 
-                // Chance que la bombe se transforme en bombe spï¿½ciale
+                // Chance que la bombe se transforme en bombe spéciale
                 if (Math.random() > 0.8) {
                     texBomb = initTexture('textures/specialbomb.png');
                     isSpecial = true;
@@ -390,17 +390,17 @@
 
             if (lastTime !== 0) {
                 // anime chacun des objets de la scene
-                // si necessaire (en fonction du temps ecoulï¿½)
+                // si necessaire (en fonction du temps ecoulé)
                 let elapsed = timeNow - lastTime;
 
-                // Le personnage est dï¿½bloquï¿½ en bas de la map.
+                // Le personnage est débloqué en bas de la map.
                 character.position[1] = -4;
 
                 character.setParameters(elapsed);
                 background.setParameters(elapsed);
                 weapon.setParameters(elapsed);
 
-                // Pour chaque bombe, on mï¿½j la position.
+                // Pour chaque bombe, on màj la position.
                 for (let bombId = bombs.length - 1; bombId >= 0; bombId--) {
 
                     var currentBomb = bombs[bombId];
@@ -408,13 +408,13 @@
                     var newPosY = currentBomb.position[1] + currentBomb.directionY * currentBomb.vitesse;
 
 
-                    // Redï¿½finition de la direction si x part en dehors du cadre
+                    // Redéfinition de la direction si x part en dehors du cadre
                     while (newPosX < MAP_DIM_MIN || newPosX > MAP_DIM_MAX) {
                         currentBomb.directionX = randomDirection();
                         newPosX = currentBomb.position[0] + currentBomb.directionX * currentBomb.vitesse;
                     }
 
-                    // Redï¿½finition de la direction si y part en dehors du cadre
+                    // Redéfinition de la direction si y part en dehors du cadre
                     while (newPosY < MAP_DIM_MIN || newPosY > MAP_DIM_MAX) {
                         currentBomb.directionY = randomDirection();
                         newPosY = currentBomb.position[1] + currentBomb.directionY * currentBomb.vitesse;
@@ -432,9 +432,9 @@
                         }
                     }
 
-                    // Collision entre l'ï¿½toile et les bombes
+                    // Collision entre l'étoile et les bombes
                     if (isCollision(currentBomb, weapon)) {
-                        console.log("Collision avec ï¿½toile :(");
+                        console.log("Collision avec étoile :(");
                         destroyedBombs.push(bombId);
                         console.log("[DESTROYED]: " + bombId);
                     } else {
@@ -449,7 +449,7 @@
                 }
             }
 
-            // On finalise par la suppression des bombes touchï¿½es.
+            // On finalise par la suppression des bombes touchées.
             for (let destroyedBombId = 0; destroyedBombId < destroyedBombs.length; destroyedBombId++) {
                 score += (bombs[destroyedBombs[destroyedBombId]].special === true) ? 10 : 1;
                 bombs.splice(destroyedBombs[destroyedBombId], 1);
@@ -466,12 +466,12 @@
             animate();
         }
 
-        // Gï¿½nï¿½ration d'une direction alï¿½atoire pour x ou y.
+        // Génération d'une direction aléatoire pour x ou y.
         function randomDirection() {
             return (Math.random() * 2.0 - 1.0);
         }
 
-        // Collision entre deux ï¿½lï¿½ments
+        // Collision entre deux éléments
         function isCollision(obj1, obj2) {
             // obj1.position = [ 0 , 0 , 0 ]
             // obj2.position = [ 0 , 0 , 0 ]
@@ -493,7 +493,7 @@
             let canvas = document.getElementById("GameBoard");
             initGL(canvas);
 
-            // test: crï¿½ation d'une texture
+            // test: création d'une texture
             let texStar = initTexture('textures/kirby-star.png');
             let texBck = initTexture('textures/background.jpg');
 
@@ -519,13 +519,13 @@
                 bombs.push(bomb);
             }*/
 
-            // la couleur de fond sera grise foncï¿½e
+            // la couleur de fond sera grise foncée
             gl.clearColor(0.5, 0.5, 0.5, 0.9);
 
             // active le test de profondeur
             gl.enable(gl.DEPTH_TEST);
 
-            // fonction de mï¿½lange utilisï¿½e pour la transparence
+            // fonction de mélange utilisée pour la transparence
             gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
 
             /* Mouse and keyboard interaction functions */
