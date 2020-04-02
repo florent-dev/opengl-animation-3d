@@ -362,7 +362,7 @@
 
                 let bomb = new Splat(texBomb);
                 bomb.position[0] = MAP_DIM_MAX * randomDirection(); // Bombe coord horizontale
-                bomb.position[1] = MAP_DIM_MAX; // Bombe coord verticale
+                bomb.position[1] = (MAP_DIM_MAX + (MAP_DIM_MAX * randomDirection())) % 0.95; // Bombe coord verticale
                 bomb.directionX = randomDirection();
                 bomb.directionY = randomDirection();
                 bomb.vitesse = Math.random() * 0.03;
