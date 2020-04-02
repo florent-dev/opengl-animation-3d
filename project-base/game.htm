@@ -367,19 +367,12 @@
                 bomb.directionY = randomDirection();
                 bomb.vitesse = Math.random() * 0.03;
                 bomb.special = isSpecial;
-                bomb.uniqid = timeNow;
 
                 bombs.push(bomb);
                 lastTimeBomb = timeNow;
 
-                if (bombs.length < 5 && delayBombSpawn > 100) {
-                    delayBombSpawn -= 100;
-                }
-            }
-
-            if (bombs.length > 10) {
-                //let texBck2 = initTexture('textures/stone-background.jpg');
-                //background = new Background(texBck2);
+                // Fais évoluer le temps de spawn des bombes en fonction du score.
+                setDelayBombSpawn();
             }
 
             if (lastTime !== 0) {
@@ -436,11 +429,13 @@
                     }
 
                     // La bombe (coord : y) est dans la zone character.
+                    // On l'ajoute dans le nb de bombes dans cette zone.
                     if (currentBomb.position[1] < -0.9) {
                         characterZoneNumberBombs++;
                     }
                 }
 
+                // On fait évoluer la position de l'étoile à chaque frame, vers le haut.
                 if (weapon.position[1] < MAP_DIM_MAX * 2) {
                     weapon.position[1] += 0.02;
                 }
@@ -456,12 +451,12 @@
             // On màj l'UI pour la character zone et on détermine si la partie est finie.
             let informationText = "Tout va bien... il n'y a pas de bombes dans ma zone !";
 
+            // Si on a deux bombes dans la zone, GAME OVER.
             if (characterZoneNumberBombs >= 2) {
                 let bestScore = (readCookie("bestScore") !== null) ? readCookie("bestScore") : score;
 
-
-                document.getElementById("game").style.border = "10px solid #d24e45";
                 document.getElementById("gameover").innerHTML = ("GAME OVER ! Votre meilleur score : " + bestScore + " points - <a href='javascript:window.location.reload()'>Rejouer</a>");
+                document.getElementById("game").style.border = "10px solid #d24e45";
                 document.getElementById("information").style.display = "none";
                 gameover = true;
 
@@ -476,9 +471,11 @@
                 }
 
             } else if (characterZoneNumberBombs === 1) {
+                // Une seule bombe est dans la zone.
                 informationText = "!!!!!!!!!!!!!!";
                 document.getElementById("game").style.border = "10px solid #e09453";
             } else {
+                // Pas de bombes dans la zone.
                 document.getElementById("game").style.border = "10px solid #000000";
             }
 
@@ -493,6 +490,23 @@
             animate();
         }
 
+        function setDelayBombSpawn() {
+            switch (score) {
+                case score > 2000: delayBombSpawn = 500; break;
+                case score > 1000: delayBombSpawn = 600; break;
+                case score > 500: delayBombSpawn = 700; break;
+                case score > 450: delayBombSpawn = 850; break;
+                case score > 300: delayBombSpawn = 900; break;
+                case score > 200: delayBombSpawn = 1000; break;
+                case score > 100: delayBombSpawn = 1100; break;
+                case score > 80: delayBombSpawn = 1200; break;
+                case score > 60: delayBombSpawn = 1300; break;
+                case score > 50: delayBombSpawn = 1400; break;
+                case score > 30: delayBombSpawn = 1600; break;
+                case score > 10: delayBombSpawn = 1800; break;
+            }
+        }
+
         // Génération d'une direction aléatoire pour x ou y.
         function randomDirection() {
             return (Math.random() * 2.0 - 1.0);
@@ -500,8 +514,6 @@
 
         // Collision entre deux éléments
         function isCollision(obj1, obj2) {
-            // obj1.position = [ 0 , 0 , 0 ]
-            // obj2.position = [ 0 , 0 , 0 ]
             let rect1 = {x: obj1.position[0], y: obj1.position[1], width: obj1.width, height: obj1.height};
             let rect2 = {x: obj2.position[0], y: obj2.position[1], width: obj2.width, height: obj2.height};
 
@@ -562,9 +574,6 @@
             gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
 
             /* Mouse and keyboard interaction functions */
-            //canvas.addEventListener('mousedown', tbMouseDown, true);
-            //canvas.addEventListener('mousemove', mouseMove, true);
-            //canvas.addEventListener('mouseup', tbMouseUp, true);
             document.onkeydown = handleKeyDown;
             document.onkeyup = handleKeyUp;
 
