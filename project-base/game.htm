@@ -322,21 +322,37 @@
             let timeNow = new Date().getTime();
             let destroyedBombs = [];
 
-            if ((timeNow - lastTimeBomb) > delayBombSpawn) {
+            // Génération des bombes progressivement
+            if ((timeNow - lastTimeBomb) > delayBombSpawn && bombs.length < 20) {
                 let texBomb = initTexture('textures/bomb.png');
+                let isSpecial = false;
+
+                // Chance que la bombe se transforme en bombe spéciale
+                if (Math.random() > 0.8) {
+                    texBomb = initTexture('textures/specialbomb.png');
+                    isSpecial = true;
+                }
+
                 let bomb = new Splat(texBomb);
                 bomb.position[0] = MAP_DIM_MAX * randomDirection(); // Bombe coord horizontale
                 bomb.position[1] = MAP_DIM_MAX; // Bombe coord verticale
                 bomb.directionX = randomDirection();
                 bomb.directionY = randomDirection();
                 bomb.vitesse = Math.random() * 0.03;
+                bomb.special = isSpecial;
+                bomb.uniqid = timeNow;
 
                 bombs.push(bomb);
                 lastTimeBomb = timeNow;
 
-                if (bombs.length < 5) {
+                if (bombs.length < 5 && delayBombSpawn > 100) {
                     delayBombSpawn -= 100;
                 }
+            }
+
+            if (bombs.length > 10) {
+                //let texBck2 = initTexture('textures/stone-background.jpg');
+                //background = new Background(texBck2);
             }
 
             if (lastTime !== 0) {
@@ -402,8 +418,8 @@
 
             // On finalise par la suppression des bombes touchées.
             for (let destroyedBombId = 0; destroyedBombId < destroyedBombs.length; destroyedBombId++) {
+                score += (bombs[destroyedBombs[destroyedBombId]].special === true) ? 10 : 1;
                 bombs.splice(destroyedBombs[destroyedBombId], 1);
-                score = score + 1000;
                 document.getElementById("score").innerText = "Score : "+score+" points";
             }
 
@@ -505,13 +521,8 @@
         <canvas id="GameBoard"></canvas>
 
         <div id="panel">
-            <table>
-                <tr>
-                    <td class="panel-lifes" width="100px"><span id="player_lifes">3</span> / <span id="total_lifes"> 3</span></td>
-                    <td class="panel-info"></td>
-                    <td class="panel-score" width="200" id="score"> Score : 0 point</td>
-                </tr>
-            </table>
+            <div id="score">Score : 0 points</div>
+            <div id="information"></div>
         </div>
 
     </div>

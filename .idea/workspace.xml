@@ -4,6 +4,7 @@
     <list default="true" id="aa3f845c-d1e4-432d-b546-e169d1de98ca" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project-base/game.htm" beforeDir="false" afterPath="$PROJECT_DIR$/project-base/game.htm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project-base/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/project-base/style.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,7 +76,8 @@
       <workItem from="1585148329111" duration="626000" />
       <workItem from="1585257985597" duration="682000" />
       <workItem from="1585258897694" duration="7668000" />
-      <workItem from="1585734560444" duration="17832000" />
+      <workItem from="1585734560444" duration="22442000" />
+      <workItem from="1585813247882" duration="1984000" />
     </task>
     <servers />
   </component>
@@ -101,10 +103,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="747" y="231" key="RollbackChangesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1583536861530" />
-    <state x="656" y="345" key="com.intellij.ide.util.TipDialog" timestamp="1585734567216">
+    <state x="656" y="345" key="com.intellij.ide.util.TipDialog" timestamp="1585813548726">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="656" y="345" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1585734567216" />
+    <state x="656" y="345" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1585813548726" />
     <state x="842" y="338" width="737" height="606" key="find.popup" timestamp="1585742897867">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
