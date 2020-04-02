@@ -253,6 +253,23 @@
         let bombs = [];
         let score = 0;
 
+        let levels = [
+            { score: 3000, delayBombSpawn: 100},
+            { score: 2000, delayBombSpawn: 200},
+            { score: 1500, delayBombSpawn: 500},
+            { score: 1000, delayBombSpawn: 600},
+            { score: 500, delayBombSpawn: 700},
+            { score: 450, delayBombSpawn: 850},
+            { score: 300, delayBombSpawn: 900},
+            { score: 200, delayBombSpawn: 1000},
+            { score: 100, delayBombSpawn: 1100},
+            { score: 80, delayBombSpawn: 1200},
+            { score: 60, delayBombSpawn: 1300},
+            { score: 50, delayBombSpawn: 1400},
+            { score: 30, delayBombSpawn: 1600},
+            { score: 10, delayBombSpawn: 1800},
+        ];
+
         function drawScene() {
             // initialisation du viewport
             gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
@@ -370,9 +387,6 @@
 
                 bombs.push(bomb);
                 lastTimeBomb = timeNow;
-
-                // Fais évoluer le temps de spawn des bombes en fonction du score.
-                setDelayBombSpawn();
             }
 
             if (lastTime !== 0) {
@@ -444,6 +458,8 @@
             // On finalise par la suppression des bombes touchées.
             for (let destroyedBombId = 0; destroyedBombId < destroyedBombs.length; destroyedBombId++) {
                 score += (bombs[destroyedBombs[destroyedBombId]].special === true) ? 10 : 1;
+                updateDelayBombSpawnAndLevel();
+
                 bombs.splice(destroyedBombs[destroyedBombId], 1);
                 document.getElementById("score").innerText = "Score : "+score+" points";
             }
@@ -490,20 +506,13 @@
             animate();
         }
 
-        function setDelayBombSpawn() {
-            switch (score) {
-                case score > 2000: delayBombSpawn = 500; break;
-                case score > 1000: delayBombSpawn = 600; break;
-                case score > 500: delayBombSpawn = 700; break;
-                case score > 450: delayBombSpawn = 850; break;
-                case score > 300: delayBombSpawn = 900; break;
-                case score > 200: delayBombSpawn = 1000; break;
-                case score > 100: delayBombSpawn = 1100; break;
-                case score > 80: delayBombSpawn = 1200; break;
-                case score > 60: delayBombSpawn = 1300; break;
-                case score > 50: delayBombSpawn = 1400; break;
-                case score > 30: delayBombSpawn = 1600; break;
-                case score > 10: delayBombSpawn = 1800; break;
+        // Fais évoluer le temps de spawn des bombes en fonction du score + le level.
+        function updateDelayBombSpawnAndLevel() {
+            for(let lvlId=0; lvlId<levels.length; lvlId++) {
+                if (score > levels[lvlId].score) {
+                    delayBombSpawn = levels[lvlId].delayBombSpawn;
+                    break;
+                }
             }
         }
 
