@@ -279,17 +279,16 @@
             weapon.sendUniformVariables();
             weapon.draw();
 
-            if (bombs.length < 15) {
-                // afficher les bombes (splat)
-                let currentBomb;
-                for (let bombId = 0; bombId < bombs.length; bombId++) {
-                    currentBomb = bombs[bombId];
-                    gl.enable(gl.BLEND); // transparence activée
-                    gl.useProgram(currentBomb.shader());
-                    currentBomb.sendUniformVariables();
-                    currentBomb.draw();
-                }
+            // afficher les bombes (splat)
+            let currentBomb;
+            for (let bombId = 0; bombId < bombs.length; bombId++) {
+                currentBomb = bombs[bombId];
+                gl.enable(gl.BLEND); // transparence activée
+                gl.useProgram(currentBomb.shader());
+                currentBomb.sendUniformVariables();
+                currentBomb.draw();
             }
+
             gl.disable(gl.BLEND); // transparence désactivée
         }
 
@@ -440,7 +439,6 @@
 
                     // La bombe (coord : y) est dans la zone character.
                     if (currentBomb.position[1] < -0.9) {
-                        console.log("currBombY:"+currentBomb.position[1]);
                         characterZoneNumberBombs++;
                     }
                 }
@@ -459,7 +457,7 @@
 
             // On màj l'UI pour la character zone et on détermine si la partie est finie.
             let informationText = "Tout va bien... il n'y a pas de bombes dans ma zone !";
-            console.log(characterZoneNumberBombs);
+
             if (characterZoneNumberBombs >= 2) {
                 let bestScore = (readCookie("bestScore") !== null) ? readCookie("bestScore") : score;
 

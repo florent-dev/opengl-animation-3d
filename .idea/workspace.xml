@@ -4,8 +4,6 @@
     <list default="true" id="aa3f845c-d1e4-432d-b546-e169d1de98ca" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project-base/game.htm" beforeDir="false" afterPath="$PROJECT_DIR$/project-base/game.htm" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project-base/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/project-base/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project-base/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/project-base/style.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -126,5 +124,9 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="842" y="338" width="737" height="606" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1585816397028" />
+    <state x="616" y="172" width="670" height="676" key="search.everywhere.popup" timestamp="1585824235447">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="616" y="172" width="670" height="676" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1585824235447" />
   </component>
 </project>
